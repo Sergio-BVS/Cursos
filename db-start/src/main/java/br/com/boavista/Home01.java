@@ -14,35 +14,41 @@ public class Home01 {
 
 	public static void main(String[] args) {
 	    try {
-	    	FileReader leitorArquivo = new FileReader("c:/temp/dados_h.txt");
+	    	FileReader leitorArquivo = new FileReader("c:/temp/Treinamentos_Realizados.csv");
 	    	BufferedReader buffer = new BufferedReader(leitorArquivo);
 
 	        	Class.forName("org.sqlite.JDBC");
 	        	
-	        	Connection con = DriverManager.getConnection("jdbc:sqlite:cadasto.db");
+	        	Connection con = DriverManager.getConnection("jdbc:sqlite:curso.db");
 	        	Statement sql = con.createStatement();
 	        	    	
-	        	sql.executeUpdate("drop table if exists cliente2 ");
-	        	sql.executeUpdate("create table cliente2 (id integer, nome string, doc string, "
-	        			+ "endereco string, bairro string,  cidade string, uf string, status string)");
+	        	sql.executeUpdate("drop table if exists treinamento ");
+	        	sql.executeUpdate("create table treinamento (id string, treinamento string, nome string, "
+	        			+ "email string, area string)");
 
 	    	String registro = buffer.readLine();
 
 	    	while (registro != null) {
 	    		
-	    		System.out.println("registro " + registro);
+	    		System.out.println("registro => " + registro);
 	    		
 	    		String[] campos = registro.split(";");
 	    	
 	    		StringBuilder sb = new StringBuilder();
 
-	    		sb.append("insert into cliente2 values (" + campos[0] + ", " + "'" + campos[1] + "'" + ", " + "'" + campos[2] + "'" + ", " + "'" + campos[3] + "'" + ", " + "'" + campos[4] + "'" + ", " + "'" + campos[5] + "'" + ", " + "'" + campos[6] + "'" +  ", " + "'" + campos[7] + "'" + ")");
+	    		sb.append("insert into treinamento values (" + "'" + campos[0] + "'" + ", " + "'" + campos[1] + "'" + ", " + "'" + campos[2] + "'" + ", " + "'" + campos[3] + "'" + ", " + "'" + campos[4] + "'"  + ")");
                          
 	    		System.out.println("sb => " + sb);
+	    		System.out.println("campos[0] " + campos[0]);
+	    		
+	    		if  (campos[0] != "id") {
+	    			
+	    			System.out.println("não deveria passar aqui");
 
 	    		String inserD = sb.toString();
 			
-	    		sql.executeUpdate(inserD);
+	    		sql.executeUpdate(inserD); };
+	    		
 	    		
 				registro = buffer.readLine();
 
